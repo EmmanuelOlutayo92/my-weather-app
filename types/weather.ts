@@ -1,4 +1,3 @@
-
 export interface WeatherResponse {
   name: string;
   weather: { description: string }[];

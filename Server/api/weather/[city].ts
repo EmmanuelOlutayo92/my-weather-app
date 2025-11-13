@@ -1,19 +1,8 @@
+import type { WeatherResponse } from "../../../types/weather";
+
 export default defineEventHandler(async (event) => {
   const { city } = event.context.params as { city: string };
   const config = useRuntimeConfig();
-  interface WeatherResponse {
-    name: string;
-    weather: { description: string }[];
-    main: {
-      temprature: number;
-      feels_like: number;
-      humidity: number;
-      temp_min: number;
-      temp_max: number;      
-    };
-    wind: { speed: number };
-    rain?: { "1h"?: number };
-  }
 
   try {
     const url = `${config.openWeather.baseAddress}/weather?q=${encodeURIComponent(
@@ -35,6 +24,7 @@ export default defineEventHandler(async (event) => {
     };
   } catch (error: any) {
     throw createError({
+      // Handle invalid city names gracefully
       statusCode: 404,
       statusMessage: "City not found or invalid.",
     });

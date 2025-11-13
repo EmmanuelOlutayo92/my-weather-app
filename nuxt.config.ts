@@ -5,12 +5,12 @@ export default defineNuxtConfig({
 
   runtimeConfig:{
     openWeather:{
-      apiKey: '' , // This is automatically updated by nuxt through the .env file using the key OPENWEATHER_API_KEY
-      baseAddress: '', // This is automatically updated by nuxt through the .env file using the key OPENWEATHER_BASE_ADDRESS
+      apiKey: process.env.OPENWEATHER_API_KEY , // This is automatically updated by nuxt through the .env file using the key OPENWEATHER_API_KEY
+      baseAddress: process.env.OPENWEATHER_BASE_URL , // This is automatically updated by nuxt through the .env file using the key OPENWEATHER_BASE_ADDRESS
     },
 
     public:{
-      baseAddress: '' // This is automatically updated by nuxt through the .env file using the key OPENWEATHER_BASE_ADDRESS
+      baseAddress: process.env.OPENWEATHER_BASE_URL // This is automatically updated by nuxt through the .env file using the key OPENWEATHER_BASE_ADDRESS
     }
     
   }
