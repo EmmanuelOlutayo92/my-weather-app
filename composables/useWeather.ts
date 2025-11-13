@@ -4,13 +4,21 @@ import { ref } from "vue";
 
 export const useWeather = () => {
     const weatherData = ref<WeatherResponse|null>(null);
-    const error = ref(null);
+    const error = ref<string | null >(null);
     const loading = ref(false);
 
     const fetchWeather = async (city: string) => {
+
+        const trimmedCity = city.trim()
         loading.value = true;
         error.value = null;
+        
 
+        if (!trimmedCity) {
+            error.value = 'Please enter a city name.'
+            weatherData.value = null
+            return
+        }
         try {
             weatherData.value  = await $fetch<WeatherResponse>(`/api/weather/${city}`);
         
