@@ -1,7 +1,6 @@
 import type { WeatherResponse } from "../../../types/weather";
 
 export default defineEventHandler(async (event) => {
-  console.log("✅ This is running on the server");
   const { city } = event.context.params as { city: string };
   const config = useRuntimeConfig();
   console.log(config.openWeather.apiKey)
@@ -12,9 +11,7 @@ export default defineEventHandler(async (event) => {
     const url = `${config.openWeather.baseAddress}/weather?q=${encodeURIComponent(
       city
     )},GB&appid=${config.openWeather.apiKey}&units=metric`;
-    //console.log(url)
     const response = await $fetch<WeatherResponse>(url);
-    //console.log(response)
     return {
       city: response.name,
       weather: response.weather[0].description,
