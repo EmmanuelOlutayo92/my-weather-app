@@ -1,4 +1,15 @@
 {
+    "compilerOptions": {
+    "baseUrl": ".",
+    "paths": {
+      "~/*": ["./*"],
+      "@/*": ["./*"]
+    },
+    "strict": true,
+    "moduleResolution": "node",
+    "esModuleInterop": true,
+    "types": ["node"]
+  },
   // https://nuxt.com/docs/guide/concepts/typescript
   "files": [],
   "references": [
