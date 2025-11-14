@@ -1,27 +1,25 @@
 <script setup lang="ts">
-import { useRouter } from 'vue-router'
+import { useRouter } from "vue-router";
 
-const router = useRouter()
+const router = useRouter();
 
-const handleSearch = ({city}: { city: string; }) => {
-  const trimmedCity = city.trim()
+const handleSearch = ({ city }: { city: string }) => {
+  const trimmedCity = city.trim();
 
-  if (!trimmedCity) return
+  if (!trimmedCity) return;
 
   router.push({
-    name: 'weather-city',
-    params: { city: encodeURIComponent(trimmedCity) }
-  })
-}
+    name: "weather-city",
+    params: { city: encodeURIComponent(trimmedCity) },
+  });
+};
 </script>
-	
+
 <template>
   <main class="page">
     <section class="card">
       <h1 class="title">Weather Checker</h1>
-      <p class="subtitle">
-        Enter a UK city to get the current weather.
-      </p>
+      <p class="subtitle">Enter a UK city to get the current weather.</p>
 
       <WeatherSearchForm @submit="handleSearch" />
     </section>
@@ -59,4 +57,3 @@ const handleSearch = ({city}: { city: string; }) => {
   margin-bottom: 1.25rem;
 }
 </style>
-

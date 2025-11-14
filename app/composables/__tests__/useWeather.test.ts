@@ -1,6 +1,5 @@
 import { describe, it, expect, vi, beforeEach } from 'vitest'
 import { useWeather } from '../useWeather'
-import type { OpenWeatherResponse  } from '../../../types/weather'
 import type { WeatherResultMapping } from "../../../types/weather";
 import type { $Fetch } from 'ofetch'
 
