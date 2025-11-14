@@ -1,32 +1,36 @@
 import { describe, it, expect, vi, beforeEach } from 'vitest'
 import { useWeather } from '../useWeather'
 import type { OpenWeatherResponse  } from '../../../types/weather'
+import type { WeatherResultMapping } from "../../../types/weather";
 import type { $Fetch } from 'ofetch'
 
 describe('useWeather composable', () => {
   let composable: ReturnType<typeof useWeather>
 
 
-  const mockResponses: Record<string, OpenWeatherResponse > = {
+  const mockResponses: Record<string, WeatherResultMapping  > = {
     London: {
-      name: 'London',
-      weather: [{ description: 'Clear sky' }],
-      main: {
-        temp: 20,
-        feels_like: 21,
-        humidity: 50,
-        temp_min: 18,
-        temp_max: 22
+      city: 'London',
+      weather: 'Clear sky',
+      temperature: 20,
+      feels_like: 21,
+      humidity: 50,
+      temp_min: 18,
+      temp_max: 22,
+      wind_speed: 5 ,
+      rain:  0 
       },
-      wind: { speed: 5 },
-      rain: { "1h": 0 }
-    },
+
     Rugby: {
-      name: 'Rugby',
-      weather: [{ description: 'Rainy' }],
-      main: { temp: 15, feels_like: 14, humidity: 70, temp_min: 12, temp_max: 16 },
-      wind: { speed: 7 },
-      rain: { '1h': 2 },
+      city: 'Rugby',
+      weather: 'Rainy',
+      temperature: 15,
+      feels_like: 14, 
+      humidity: 70, 
+      temp_min: 12, 
+      temp_max: 16 ,
+      wind_speed: 7 ,
+      rain: 2 
     },
   }
 
@@ -49,18 +53,16 @@ describe('useWeather composable', () => {
   })
 
   it('fetches weather for LONDON successfully', async () => {
-    const mockResponse:  OpenWeatherResponse = {
-      name: 'London',
-      weather: [{ description: 'Clear sky' }],
-      main: {
-        temp: 20,
-        feels_like: 21,
-        humidity: 50,
-        temp_min: 18,
-        temp_max: 22
-      },
-      wind: { speed: 5 },
-      rain: { "1h": 0 }
+    const mockResponse:  WeatherResultMapping = {
+      city: 'London',
+      weather: 'Clear sky',
+      temperature: 20,
+      feels_like: 21,
+      humidity: 50,
+      temp_min: 18,
+      temp_max: 22,
+      wind_speed: 5 ,
+      rain:  0 
     };
 
    
@@ -85,12 +87,16 @@ describe('useWeather composable', () => {
   })
 
   it('fetches weather for RUGBY successfully', async () => {
-    const mockResponse:  OpenWeatherResponse = {
-        name: 'Rugby',
-      weather: [{ description: 'Rainy' }],
-      main: { temp: 15, feels_like: 14, humidity: 70, temp_min: 12, temp_max: 16 },
-      wind: { speed: 7 },
-      rain: { '1h': 2 },
+    const mockResponse:  WeatherResultMapping= {
+      city: 'Rugby',
+      weather: 'Rainy',
+      temperature: 15,
+      feels_like: 14, 
+      humidity: 70, 
+      temp_min: 12, 
+      temp_max: 16 ,
+      wind_speed: 7 ,
+      rain: 2 
     };
 
     await composable.fetchWeather('/api/weather/Rugby')
@@ -103,12 +109,16 @@ describe('useWeather composable', () => {
 
 
   it('fetches weather unsuccessfully', async () => {
-    const mockResponse:  OpenWeatherResponse = {
-        name: 'Rugby',
-      weather: [{ description: 'Rainy' }],
-      main: { temp: 15, feels_like: 14, humidity: 70, temp_min: 12, temp_max: 16 },
-      wind: { speed: 7 },
-      rain: { '1h': 2 },
+    const mockResponse:  WeatherResultMapping = {
+      city: 'Rugby',
+      weather: 'Rainy',
+      temperature: 15,
+      feels_like: 14, 
+      humidity: 70, 
+      temp_min: 12, 
+      temp_max: 16 ,
+      wind_speed: 7 ,
+      rain: 2 
     };
 
     await composable.fetchWeather('/api/weather/Lagos')
