@@ -1,5 +1,13 @@
 // https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
-  compatibilityDate: '2025-07-15',
-  devtools: { enabled: true }
-})
+  compatibilityDate: "2025-07-15",
+  devtools: { enabled: true },
+  modules: ["@nuxt/ui"],
+  css: ["~/assets/css/main.css"],
+  runtimeConfig: {
+    openWeather: {
+      apiKey: process.env.OPENWEATHER_API_KEY, // This is automatically updated by nuxt through the .env file using the key OPENWEATHER_API_KEY
+      baseAddress: "https://api.openweathermap.org/data/2.5", // This is automatically updated by nuxt through the .env file using the key OPENWEATHER_BASE_ADDRESS
+    },
+  },
+});
