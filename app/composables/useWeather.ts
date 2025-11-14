@@ -1,9 +1,9 @@
-import { useNuxtApp } from "nuxt/app";
-import type { WeatherResponse } from "../types/weather";
+
+import type { WeatherResultMapping } from "../../types/weather";
 import { ref } from "vue";
 
 export const useWeather = () => {
-    const weatherData = ref<WeatherResponse|null>(null);
+    const weatherData = ref<WeatherResultMapping|null>(null);
     const error = ref<string | null >(null);
     const loading = ref(false);
 
@@ -20,7 +20,7 @@ export const useWeather = () => {
             return
         }
         try {
-            weatherData.value  = await $fetch<WeatherResponse>(`/api/weather/${city}`);
+            weatherData.value  = await $fetch<WeatherResultMapping>(`/api/weather/${city}`);
         
         } catch (err: any) {
             error.value = err?.data?.statusMessage || "Unable to fetch weather data.";

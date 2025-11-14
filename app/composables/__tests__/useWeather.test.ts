@@ -1,18 +1,18 @@
 import { describe, it, expect, vi, beforeEach } from 'vitest'
 import { useWeather } from '../useWeather'
-import type { WeatherResponse } from '../../types/weather'
+import type { OpenWeatherResponse  } from '../../../types/weather'
 import type { $Fetch } from 'ofetch'
 
 describe('useWeather composable', () => {
   let composable: ReturnType<typeof useWeather>
 
 
-  const mockResponses: Record<string, WeatherResponse> = {
+  const mockResponses: Record<string, OpenWeatherResponse > = {
     London: {
       name: 'London',
       weather: [{ description: 'Clear sky' }],
       main: {
-        temprature: 20,
+        temp: 20,
         feels_like: 21,
         humidity: 50,
         temp_min: 18,
@@ -24,7 +24,7 @@ describe('useWeather composable', () => {
     Rugby: {
       name: 'Rugby',
       weather: [{ description: 'Rainy' }],
-      main: { temprature: 15, feels_like: 14, humidity: 70, temp_min: 12, temp_max: 16 },
+      main: { temp: 15, feels_like: 14, humidity: 70, temp_min: 12, temp_max: 16 },
       wind: { speed: 7 },
       rain: { '1h': 2 },
     },
@@ -49,11 +49,11 @@ describe('useWeather composable', () => {
   })
 
   it('fetches weather for LONDON successfully', async () => {
-    const mockResponse: WeatherResponse = {
+    const mockResponse:  OpenWeatherResponse = {
       name: 'London',
       weather: [{ description: 'Clear sky' }],
       main: {
-        temprature: 20,
+        temp: 20,
         feels_like: 21,
         humidity: 50,
         temp_min: 18,
@@ -85,10 +85,10 @@ describe('useWeather composable', () => {
   })
 
   it('fetches weather for RUGBY successfully', async () => {
-    const mockResponse: WeatherResponse = {
+    const mockResponse:  OpenWeatherResponse = {
         name: 'Rugby',
       weather: [{ description: 'Rainy' }],
-      main: { temprature: 15, feels_like: 14, humidity: 70, temp_min: 12, temp_max: 16 },
+      main: { temp: 15, feels_like: 14, humidity: 70, temp_min: 12, temp_max: 16 },
       wind: { speed: 7 },
       rain: { '1h': 2 },
     };
@@ -103,10 +103,10 @@ describe('useWeather composable', () => {
 
 
   it('fetches weather unsuccessfully', async () => {
-    const mockResponse: WeatherResponse = {
+    const mockResponse:  OpenWeatherResponse = {
         name: 'Rugby',
       weather: [{ description: 'Rainy' }],
-      main: { temprature: 15, feels_like: 14, humidity: 70, temp_min: 12, temp_max: 16 },
+      main: { temp: 15, feels_like: 14, humidity: 70, temp_min: 12, temp_max: 16 },
       wind: { speed: 7 },
       rain: { '1h': 2 },
     };
