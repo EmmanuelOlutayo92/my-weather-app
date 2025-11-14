@@ -1,71 +1,74 @@
 <script setup lang="ts">
-
 import { ref } from "vue";
 
 const props = defineProps<{
-  initialCity?: string
-}>()
+  initialCity?: string;
+}>();
 
 const emit = defineEmits<{
-  (e: 'submit', payload: { city: string; }): void
-}>()
+  (e: "submit", payload: { city: string }): void;
+}>();
 
-const city = ref(props.initialCity ?? '')
-
+const city = ref(props.initialCity ?? "");
 
 const onSubmit = () => {
-  emit('submit', {
-    city: city.value
-  })
-}
+  emit("submit", {
+    city: city.value,
+  });
+};
 </script>
 
 <template>
-  <form @submit.prevent="onSubmit" class="ws-form">
-    <label class="ws-label" for="city">City</label>
-    <input
-      id="city"
-      v-model="city"
-      type="text"
-      placeholder="e.g. London, Manchester, Rugby"
-      class="ws-input"
-    />
-    <button type="submit" class="ws-button">
-      Search
-    </button>
-  </form>
+  <UForm @submit.prevent="onSubmit">
+    <div class="ws-form-grid">
+      <UFormField label="City" name="city" class="ws-label" />
+      <UInput
+        id="city"
+        v-model="city"
+        type="text"
+        placeholder="e.g. London, Manchester, Rugby"
+        size="lg"
+        class="ws-input"
+      />
+      <UButton
+        type="submit"
+        size="lg"
+        color="primary"
+        variant="solid"
+        icon="i-heroicons-magnifying-glass-20-solid"
+        class="ws-button"
+      >
+        Search
+      </UButton>
+    </div>
+  </UForm>
 </template>
 
-
-
 <style scoped>
-.ws-form {
+.ws-form-grid {
   display: grid;
   gap: 0.75rem;
-  grid-template-columns: 1fr 1fr auto;
-  align-items: end;
+  grid-template-columns: 1fr;
 }
-
+@media (min-width: 640px) {
+  .ws-form-grid {
+    grid-template-columns: 1fr auto;
+  }
+}
 .ws-label {
-  grid-column: span 3;
+  grid-column: 1 / -1;
   font-size: 0.8rem;
   color: #6b7280;
 }
-
+.ws-button,
 .ws-input {
-  padding: 0.5rem 0.7rem;
-  border-radius: 0.5rem;
-  border: 1px solid #d1d5db;
-  font-size: 0.9rem;
+  height: 48px !important; /* matches UInput size="lg" */
+  display: flex;
+  align-items: center;
 }
-
-.ws-button {
-  padding: 0.55rem 1rem;
-  border-radius: 0.5rem;
-  border: none;
-  font-weight: 600;
-  background: #38bdf8;
-  color: #0f172a;
-  cursor: pointer;
+@media (min-width: 640px) {
+  .ws-button {
+    width: 100%;
+  }
 }
 </style>
