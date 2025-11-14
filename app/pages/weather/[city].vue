@@ -36,100 +36,115 @@ const handleSearch = ({ city }: { city: string }) => {
 </script>
 
 <template>
-  <main class="min-h-screen bg-slate-950 py-8">
-    <UContainer>
-      <UCard class="max-w-4xl mx-auto">
-        <template #header>
-          <div class="flex items-center justify-between gap-4">
-            <div>
-              <h1 class="text-xl font-semibold">Weather Results</h1>
-              <p class="text-sm text-gray-400">
-                View Weather conditions for your chosen city
-              </p>
-            </div>
-
-            <UButton
-              variant="ghost"
-              color="gray"
-              size="sm"
-              icon="i-heroicons-arrow-left"
-              to="/"
-            >
-              Back To Home
-            </UButton>
-          </div>
-        </template>
-
-        <div class="space-y-6">
-          <!-- Search form on the results page -->
-          <WeatherSearchForm :initial-city="cityParam" @submit="handleSearch" />
-
-          <section class="content">
-            <div v-if="loading">
-              <UProgress color="secondary" />
-            </div>
-            <div v-if="error && !loading">
-              <UAlert
-                color="red"
-                variant="soft"
-                icon="i-heroicons-exclamation-triangle"
-                title="Something went wrong"
-                :description="error"
-              />
-            </div>
-
-            <section v-if="weatherData && !loading && !error" class="space-y-4">
-              <h2 class="location">
-                {{ weatherData.city }}
-              </h2>
-              <p class="description">
-                {{ weatherData.weather }}
-              </p>
-
-              <div class="grid">
-                <div class="item">
-                  <span class="label">Temperature</span>
-                  <span class="value">{{ weatherData.temperature }}°C</span>
-                </div>
-
-                <div class="item">
-                  <span class="label">Feels like</span>
-                  <span class="value">{{ weatherData.feels_like }}°C</span>
-                </div>
-
-                <div class="item">
-                  <span class="label">Humidity</span>
-                  <span class="value">{{ weatherData.humidity }}%</span>
-                </div>
-
-                <div class="item">
-                  <span class="label">Min / Max</span>
-                  <span class="value">
-                    {{ weatherData.temp_min }}°C / {{ weatherData.temp_max }}°C
-                  </span>
-                </div>
-
-                <div class="item">
-                  <span class="label">Wind speed</span>
-                  <span class="value">{{ weatherData.wind_speed }} mph</span>
-                </div>
-
-                <div class="item">
-                  <span class="label">Rain (last hour)</span>
-                  <span class="value">{{ weatherData.rain }} mm</span>
-                </div>
-              </div>
-            </section>
-          </section>
+  <main class="page">
+    <section class="card">
+      <header class="header">
+        <div>
+          <h1 class="title">Weather results</h1>
+          <NuxtLink to="/" class="back-link">← Back to home</NuxtLink>
         </div>
-      </UCard>
-    </UContainer>
+      </header>
+
+      <!-- Search form on the results page -->
+      <WeatherSearchForm :initial-city="cityParam" @submit="handleSearch" />
+
+      <section class="content">
+        <p v-if="loading">Loading weather…</p>
+        <p v-if="error && !loading" class="error">{{ error }}</p>
+
+        <section v-if="weatherData && !loading && !error" class="result">
+          <h2 class="location">
+            {{ weatherData.name }}
+          </h2>
+          <p class="description">
+            {{ weatherData.weather }}
+          </p>
+
+          <div class="grid">
+            <div class="item">
+              <span class="label">Temperature</span>
+              <span class="value">{{ weatherData.temperature }}°C</span>
+            </div>
+
+            <div class="item">
+              <span class="label">Feels like</span>
+              <span class="value">{{ weatherData.feels_like }}°C</span>
+            </div>
+
+            <div class="item">
+              <span class="label">Humidity</span>
+              <span class="value">{{ weatherData.humidity }}%</span>
+            </div>
+
+            <div class="item">
+              <span class="label">Min / Max</span>
+              <span class="value">
+                {{ weatherData.temp_min }}°C / {{ weatherData.temp_max }}°C
+              </span>
+            </div>
+
+            <div class="item">
+              <span class="label">Wind speed</span>
+              <span class="value">{{ weatherData.wind_speed }} mph</span>
+            </div>
+
+            <div class="item">
+              <span class="label">Rain (last hour)</span>
+              <span class="value">{{ weatherData.rain }} mm</span>
+            </div>
+          </div>
+        </section>
+      </section>
+    </section>
   </main>
 </template>
 
 <style scoped>
+.page {
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  padding: 1.5rem;
+  background: #020617;
+  color: #e5e7eb;
+}
+
+.card {
+  width: 100%;
+  max-width: 900px;
+  background: #020617;
+  border-radius: 1rem;
+  padding: 1.75rem;
+  border: 1px solid rgba(148, 163, 184, 0.4);
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  margin-bottom: 1rem;
+}
+
+.title {
+  font-size: 1.5rem;
+}
+
+.back-link {
+  font-size: 0.85rem;
+  color: #38bdf8;
+}
+
 .content {
   margin-top: 1.25rem;
+}
+
+.error {
+  margin-top: 1rem;
+  color: #fca5a5;
+}
+
+.result {
+  margin-top: 1.5rem;
 }
 
 .location {
