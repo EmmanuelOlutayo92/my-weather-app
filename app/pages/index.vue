@@ -3,7 +3,7 @@ import { useRouter } from "vue-router";
 
 const router = useRouter();
 
-const handleSearch = ({ city }: { city: string }) => {
+const handleSearch = ({ city, country }: { city: string; country: string }) => {
   const trimmedCity = city.trim();
 
   if (!trimmedCity) return;
@@ -11,6 +11,7 @@ const handleSearch = ({ city }: { city: string }) => {
   router.push({
     name: "weather-city",
     params: { city: encodeURIComponent(trimmedCity) },
+    query: { country },
   });
 };
 </script>

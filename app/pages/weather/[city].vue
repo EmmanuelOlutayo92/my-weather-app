@@ -10,29 +10,33 @@ const router = useRouter();
 const cityParam = computed(() =>
   decodeURIComponent(String(route.params.city || ""))
 );
+const counrtyParam = computed(() =>
+  decodeURIComponent(String(route.params.counrty || ""))
+);
 
 const { weatherData, loading, error, fetchWeather } = useWeather();
 
-// Fetch when page loads or when params change
-watch(
-  () => [cityParam.value],
-  ([city]) => {
-    if (city) {
-      fetchWeather(city);
-    }
-  },
-  { immediate: true }
-);
-
-const handleSearch = ({ city }: { city: string }) => {
+const handleSearch = ({ city, country }: { city: string; country: string }) => {
   const trimmedCity = city.trim();
   if (!trimmedCity) return;
 
   router.push({
     name: "weather-city",
     params: { city: encodeURIComponent(trimmedCity) },
+    query: { country },
   });
 };
+
+// Fetch when page loads or when params change
+watch(
+  () => [cityParam.value, route.query.country],
+  ([city, country]) => {
+    if (city) {
+      fetchWeather(city, String(country));
+    }
+  },
+  { immediate: true }
+);
 </script>
 
 <template>
@@ -46,7 +50,11 @@ const handleSearch = ({ city }: { city: string }) => {
       </header>
 
       <!-- Search form on the results page -->
-      <WeatherSearchForm :initial-city="cityParam" @submit="handleSearch" />
+      <WeatherSearchForm
+        :initial-city="cityParam"
+        :initial-country="counrtyParam"
+        @submit="handleSearch"
+      />
 
       <section class="content">
         <p v-if="loading">Loading weather…</p>

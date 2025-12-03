@@ -1,21 +1,71 @@
 <script setup lang="ts">
-import { ref } from "vue";
+import { ref, watch } from "vue";
+import type { DropdownMenuItem } from "@nuxt/ui";
 
 const props = defineProps<{
   initialCity?: string;
+  initialCountry?: string;
 }>();
 
 const emit = defineEmits<{
-  (e: "submit", payload: { city: string }): void;
+  (e: "submit", payload: { city: string; country: string }): void;
 }>();
 
 const city = ref(props.initialCity ?? "");
+const country = ref(props.initialCountry ?? "GB");
 
 const onSubmit = () => {
   emit("submit", {
     city: city.value,
+    country: country.value,
   });
 };
+
+const items = ref<DropdownMenuItem[]>([
+  {
+    label: "United Kingdom (GB)",
+    value: "GB",
+    onSelect: () => {
+      country.value = "GB";
+      countryLabel.value = "United Kingdom (GB)";
+    },
+  },
+  {
+    label: "Ireland (IE)",
+    value: "IE",
+    onSelect: () => {
+      country.value = "IE";
+      countryLabel.value = "Ireland (IE)";
+    },
+  },
+  {
+    label: "United States (US)",
+    value: "US",
+    onSelect: () => {
+      country.value = "US";
+      countryLabel.value = "United States (US)";
+    },
+  },
+  {
+    label: "France (FR)",
+    value: "FR",
+    onSelect: () => {
+      country.value = "FR";
+      countryLabel.value = "France (FR)";
+    },
+  },
+]);
+const selectedLabel = computed(
+  () => items.value.find((i) => i.value === country.value).label || "Country"
+);
+
+console.log(city.value);
+console.log(country.value);
+
+watch(country, (val) => {
+  console.log("COUNTRY CHANGED:", val);
+  console.log("LABEL NOW:", selectedLabel.value);
+});
 </script>
 
 <template>
@@ -30,6 +80,25 @@ const onSubmit = () => {
         size="lg"
         class="ws-input"
       />
+      <UDropdownMenu
+        :items="items"
+        :content="{
+          align: 'start',
+          side: 'bottom',
+          sideOffset: 8,
+        }"
+        :ui="{
+          content: 'w-48',
+        }"
+      >
+        <UButton
+          :label="selectedLabel"
+          icon="i-lucide-menu"
+          color="neutral"
+          variant="outline"
+        />
+      </UDropdownMenu>
+
       <UButton
         type="submit"
         size="lg"
